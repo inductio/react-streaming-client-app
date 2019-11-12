@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
+import {createStream} from '../../actions';
 
 class StreamCreate extends Component {
     renderError = ({error, touched}) => {
         if (touched && error) {
             return (
                 <div className="ui error message">
-                   <div className="header">{error}</div>
+                    <div className="header">{error}</div>
                 </div>
             )
         }
@@ -24,8 +26,7 @@ class StreamCreate extends Component {
     };
 
     onSubmit = (formValues) => {
-        //console.log({formValues})
-        //send request ot API server logic here to be implemented
+        this.props.createStream(formValues);
     };
 
     render() {
@@ -54,7 +55,15 @@ const validate = (formValues) => {
     return errors;
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
     form: 'streamCreate',
     validate: validate
 })(StreamCreate);
+
+// const mapStateToProps = (state) => {
+//
+// };
+
+export default connect(null, {
+    createStream
+})(formWrapped)
