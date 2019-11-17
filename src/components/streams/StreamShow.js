@@ -8,6 +8,7 @@ class StreamShow extends React.Component {
         super(props);
         this.videoRef = React.createRef()
     }
+
     componentDidMount() {
         this.props.fetchStream(this.props.streamId);
         this.buildPlayer();
@@ -36,7 +37,12 @@ class StreamShow extends React.Component {
     }
 
     render() {
+        if (!this.props.stream) {
+            return <div>Loading...</div>
+        }
+
         const {title, description} = this.props.stream;
+
         return (
             <div className="content ui">
                 <video ref={this.videoRef} style={{'width': '100%'}} controls={true}/>
